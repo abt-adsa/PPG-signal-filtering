@@ -1,4 +1,4 @@
-function [red_signal, ir_signal] = synthesizeData(time, freqs, amp_red, amp_ir, phases)
+function [red_signal, ir_signal] = synthesizeSignal(time, freqs, amp_red, amp_ir, phases)
     N = length(time);
     red_signal = zeros(1, N);
     ir_signal = zeros(1, N);
