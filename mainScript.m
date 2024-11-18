@@ -1,6 +1,6 @@
 clc, clearvars, close all;
 
-%% Parameters
+%% Signal parameters
 
 fs = 300;
 N = 3000;
@@ -14,7 +14,7 @@ amp_ir = [0.62, 0.42, 0.09, 0.04, 0.002] * 1e-3;
 
 %% Generate synthetic signals
 
-[red_signal, ir_signal] = synthesizeData(time, freqs, amp_red, amp_ir, phases);
+[red_signal, ir_signal] = synthesizeSignal(time, freqs, amp_red, amp_ir, phases);
 [red_noisy, ir_noisy] = addNoise(red_signal, ir_signal, time);
 
 
@@ -32,8 +32,8 @@ ir_prefilt = medfilt1(ir_prefilt, med_window);
 
 % Notch filter
 wo = 60/(fs/2);
-bw = wo/35;
-[b_notch,a_notch] = iirnotch(wo,bw);
+bw = wo/50;
+[b_notch,a_notch] = iirnotch(wo, bw);
 red_notched = filtfilt(b_notch, a_notch, red_prefilt);
 ir_notched = filtfilt(b_notch, a_notch, ir_prefilt);
 
@@ -43,7 +43,7 @@ bp_cutoff = [0.5 5];
 red_ac = filtfilt(b_bp, a_bp, red_notched);
 ir_ac = filtfilt(b_bp, a_bp, ir_notched);
 
-% Lowpass filter
+% Low-pass filter
 lp_cutoff = 0.5;
 [b_lp,a_lp] = butter(4, lp_cutoff/(fs/2), 'low');
 red_dc = filtfilt(b_lp, a_lp, red_notched);
