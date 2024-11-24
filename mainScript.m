@@ -56,6 +56,8 @@ ir_norm = ir_ac ./ ir_dc;
 [pad_pts, freq_axis, hr_scale] = padZeros(length(red_norm), fs);
 red_fft = abs(computeFFT(red_norm, pad_pts, fs));
 ir_fft = abs(computeFFT(ir_norm, pad_pts, fs));
+red_noisy_fft = abs(computeFFT(red_noisy, pad_pts, fs));
+ir_noisy_fft = abs(computeFFT(ir_noisy, pad_pts, fs));
 
 
 %% Calculate metrics and compare
@@ -75,4 +77,5 @@ ir_fft = abs(computeFFT(ir_norm, pad_pts, fs));
 displayResults(hr_bpm, spo2, hr_bpm_clean, spo2_clean, hr_error, spo2_error);
 
 plotPPGSignals(time, red_noisy, ir_noisy, red_norm, ir_norm, ...
-    red_fft, ir_fft, freq_axis, hr_bpm_clean, spo2_clean, hr_bpm, spo2);
+    red_noisy_fft, ir_noisy_fft, red_fft, ir_fft, freq_axis, ...
+    hr_bpm_clean, spo2_clean, hr_bpm, spo2);
