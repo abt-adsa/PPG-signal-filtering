@@ -6,15 +6,10 @@ fs = 300;
 N = 3000;
 time = linspace(0, 10, N);
 
-freqs = [1.3, 2.6, 3.9, 5.2, 6.5];
-phases = [-1.58, -1.60, -1.61, -1.61, -1.30];
-amp_red = [0.21, 0.15, 0.03, 0.01, 0.00] * 1e-3;
-amp_ir = [0.62, 0.42, 0.09, 0.04, 0.002] * 1e-3;
-
 
 %% Generate synthetic signals
 
-[red_signal, ir_signal] = synthesizeSignal(time, freqs, amp_red, amp_ir, phases);
+[red_signal, ir_signal] = synthesizeSignal(time);
 [red_noisy, ir_noisy] = addNoise(red_signal, ir_signal, time);
 
 
@@ -77,9 +72,7 @@ ir_fft = abs(computeFFT(ir_norm, pad_pts, fs));
 
 %% Results and Plots
 
-% Display results
 displayResults(hr_bpm, spo2, hr_bpm_clean, spo2_clean, hr_error, spo2_error);
 
-% Plot signals
 plotPPGSignals(time, red_noisy, ir_noisy, red_norm, ir_norm, ...
     red_fft, ir_fft, freq_axis, hr_bpm_clean, spo2_clean, hr_bpm, spo2);
